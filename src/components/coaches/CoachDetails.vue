@@ -3,7 +3,9 @@
         <div class="col-12">
             <div class="card mb-3 bg-light">
                 <div class="card-body">
-                    <h5 class="card-title">Coach Details</h5>
+                    <h5 class="card-title">
+                        <!--                        Coach Details - {{ localCoachData.id }}-->
+                    </h5>
                     <div v-if="localCoachData">
                         <h3>
                             {{ localCoachData.firstName }}
@@ -33,6 +35,7 @@
 </template>
 
 <script>
+import getPost from '@/utility/getPost';
 import { mapGetters } from 'vuex';
 import BadgeItems from '@/components/coaches/BadgeItems';
 
@@ -53,30 +56,34 @@ export default {
     },
     methods: {
         getCoachData() {
-            this.localCoachData = this.coachData(this.coachId);
+            // this.localCoachData = this.coachData(this.coachId);
+            return this.coachData(this.coachId);
         }
     },
-    created() {
-        // DEBUG
-        // console.log(this.localCoachData);
-        // console.log(this.$store.state);
-
-        // Other try
-        // return new Promise(resolve => {
-        //     setTimeout(() => {
-        //         console.log('created');
-        //         this.getCoachData();
-        //         resolve();
-        //     });
-        // });
-        setTimeout(() => {
+    created() {},
+    /*mounted() {
+        this.$nextTick(function() {
             this.getCoachData();
-        }, 500);
-    },
+        });
+    },*/
     watch: {
         // If the coachId changed, getting new coach data
         coachId() {
             this.getCoachData();
+        }
+    },
+    beforeRouteEnter(to, from, next) {
+        getPost(to.params.coachId, (err, post) => {
+            next(vm => vm.localCoachData(err, post));
+        });
+    },
+    // eslint-disable-next-line no-unused-vars
+    async beforeRouteUpdate(to, from) {
+        this.localCoachData = null;
+        try {
+            this.localCoachData = await getPost(to.params.coachId);
+        } catch (error) {
+            this.error = error.toString();
         }
     }
 };
