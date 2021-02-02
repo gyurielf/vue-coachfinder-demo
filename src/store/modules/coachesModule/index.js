@@ -6,10 +6,10 @@ const coachesModule = {
     namespaced: true,
     state() {
         return {
-            coaches: [],
-            selectedCoach: null,
-            randomN: 88,
-            random2N: 2
+            coaches: []
+            // selectedCoach: null,
+            // randomN: 88,
+            // random2N: 2
         };
     },
     mutations: coachesMutations,

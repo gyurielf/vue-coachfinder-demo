@@ -3,7 +3,7 @@ export default {
         state.coaches = payload[Object.keys(payload)[0]];
         // console.log(state.coaches);
     }
-
+    // Temporary disabled
     // async getCoachData(state) {
     //     try {
     //         const response = await fetch(
@@ -20,7 +20,7 @@ export default {
     //         console.log(error);
     //     }
     // },
-
+    // not need atm(or never)
     /*getCoachData(state, payload) {
         // const results = payload[Object.keys(payload)[0]];
         // state.selectedCoach = results.find(coach => coach.id == this.coachId);

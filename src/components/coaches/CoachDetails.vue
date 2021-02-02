@@ -3,8 +3,8 @@
         <div class="col-12">
             <div class="card mb-3 bg-light">
                 <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <div v-if="false">
+                    <h5 class="card-title">Coach Details</h5>
+                    <div v-if="localCoachData">
                         <h3>
                             {{ localCoachData.firstName }}
                             {{ localCoachData.lastName }}
@@ -15,7 +15,7 @@
                             :badgeType="type"
                         ></badge-items>
                     </div>
-                    <!--                    <p class="card-text">{{ localCoachData.desc }}</p>-->
+                    <p class="card-text">{{ localCoachData.desc }}</p>
                     <p class="card-danger"></p>
 
                     <router-link
@@ -42,6 +42,7 @@ export default {
     props: ['coachId'],
     data() {
         return {
+            isLoading: true,
             localCoachData: {}
         };
     },
@@ -49,19 +50,18 @@ export default {
         ...mapGetters('coachesModule', {
             coachData: 'listSelectedCoachData'
         })
-        // selectedCoach() {
-        //     return this.coachData(this.coachId);
-        // }
     },
     methods: {
         getCoachData() {
             this.localCoachData = this.coachData(this.coachId);
-            return this.coachData(this.coachId);
         }
     },
     created() {
-        console.log(this.getCoachData());
-        console.log(this.localCoachData);
+        // DEBUG
+        // console.log(this.localCoachData);
+        // console.log(this.$store.state);
+
+        // Other try
         // return new Promise(resolve => {
         //     setTimeout(() => {
         //         console.log('created');
@@ -69,21 +69,15 @@ export default {
         //         resolve();
         //     });
         // });
-        // return new Promise(resolve => {
-        //     setTimeout(() => {
-        //         console.log('created')
-        //         resolve()
-        //     })
-        // })
-    },
-    mounted() {
-        console.log('beforeMounted');
-        console.log(this.localCoachData);
+        setTimeout(() => {
+            this.getCoachData();
+        }, 500);
     },
     watch: {
-        // coachId() {
-        //     this.getCoachData();
-        // }
+        // If the coachId changed, getting new coach data
+        coachId() {
+            this.getCoachData();
+        }
     }
 };
 </script>

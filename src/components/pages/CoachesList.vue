@@ -16,7 +16,6 @@
 
 <script>
 import CoachItems from '@/components/coaches/CoachItems';
-// eslint-disable-next-line no-unused-vars
 import { mapActions, mapGetters } from 'vuex';
 export default {
     name: 'CoachesList',
@@ -32,6 +31,7 @@ export default {
         })
     },
     created() {
+        // Fetching coaches array from firebase
         this.letsGetCoaches();
     }
 };
