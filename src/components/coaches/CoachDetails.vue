@@ -3,9 +3,7 @@
         <div class="col-12">
             <div class="card mb-3 bg-light">
                 <div class="card-body">
-                    <h5 class="card-title">
-                        <!--                        Coach Details - {{ localCoachData.id }}-->
-                    </h5>
+                    <h5 class="card-title"></h5>
                     <div v-if="localCoachData">
                         <h3>
                             {{ localCoachData.firstName }}
@@ -35,7 +33,6 @@
 </template>
 
 <script>
-import getPost from '@/utility/getPost';
 import { mapGetters } from 'vuex';
 import BadgeItems from '@/components/coaches/BadgeItems';
 
@@ -45,7 +42,6 @@ export default {
     props: ['coachId'],
     data() {
         return {
-            isLoading: true,
             localCoachData: {}
         };
     },
@@ -56,34 +52,25 @@ export default {
     },
     methods: {
         getCoachData() {
-            // this.localCoachData = this.coachData(this.coachId);
-            return this.coachData(this.coachId);
+            this.localCoachData = this.coachData(this.coachId);
         }
     },
-    created() {},
-    /*mounted() {
+    created() {
+        // If i use this, it will work.
+        // setTimeout(() => {
+        //     this.getCoachData();
+        // }, 200);
+    },
+    mounted() {
+        // With this, the switching is available, but if I hit the direct url of the coach, i got errors.
         this.$nextTick(function() {
+            //code here
             this.getCoachData();
         });
-    },*/
+    },
     watch: {
-        // If the coachId changed, getting new coach data
         coachId() {
             this.getCoachData();
-        }
-    },
-    beforeRouteEnter(to, from, next) {
-        getPost(to.params.coachId, (err, post) => {
-            next(vm => vm.localCoachData(err, post));
-        });
-    },
-    // eslint-disable-next-line no-unused-vars
-    async beforeRouteUpdate(to, from) {
-        this.localCoachData = null;
-        try {
-            this.localCoachData = await getPost(to.params.coachId);
-        } catch (error) {
-            this.error = error.toString();
         }
     }
 };

@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router';
 import CoachesList from '@/components/pages/CoachesList';
 import RequestsList from '@/components/pages/RequestsList';
 import CoachDetails from '@/components/coaches/CoachDetails';
-// const CoachDetails = () => import('@/components/coaches/CoachDetails');
 import Contact from '@/components/pages/Contact';
 import NotFound from '@/components/pages/NotFound';
 
@@ -42,7 +41,7 @@ const router = createRouter({
             component: RequestsList
         },
         {
-            path: '/:pathMatch(.*)*',
+            path: '/:notFound(.*)',
             name: 'not-found',
             component: NotFound
         }

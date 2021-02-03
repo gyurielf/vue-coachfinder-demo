@@ -6,7 +6,6 @@ export default {
         const coachList = otherGetters.coachList;
         return coachList.find(coach => coach.id == coachId);
     }
-    // TESTS
     // randomNumber(state) {
     //     return state.randomN + 10;
     // },
