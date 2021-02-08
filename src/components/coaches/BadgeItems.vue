@@ -10,11 +10,11 @@ export default {
     props: ['badgeType'],
     computed: {
         badgeClass() {
-            if (this.badgeType === 'Backend') {
+            if (this.badgeType === 'backend') {
                 return 'badge-danger';
-            } else if (this.badgeType === 'Frontend') {
+            } else if (this.badgeType === 'frontend') {
                 return 'badge-primary';
-            } else if (this.badgeType === 'Graphics') {
+            } else if (this.badgeType === 'graphics') {
                 return 'badge-warning';
             } else {
                 return 'badge-secondary';

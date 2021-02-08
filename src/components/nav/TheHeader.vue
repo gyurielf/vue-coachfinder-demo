@@ -9,12 +9,24 @@
                 </div>
                 <nav class="my-2 my-md-0 mr-md-3 float-right">
                     <router-link
-                        class="p-2 btn btn-light"
+                        class="p-2 mx-1 btn btn-light"
                         :to="{ name: 'coaches' }"
-                        >Coach List</router-link
                     >
-                    <a class="p-2 btn btn-light" href="#">Requests</a>
-                    <a class="mx-2 btn btn-outline-primary" href="#">Log in</a>
+                        Coach List
+                    </router-link>
+                    <router-link
+                        class="p-2 mx-1 btn btn-light"
+                        :to="{ name: 'requests' }"
+                    >
+                        Requests
+                    </router-link>
+                    <router-link
+                        class="mx-1 btn btn-primary"
+                        :to="{ name: 'register' }"
+                    >
+                        Register
+                    </router-link>
+                    <a class="ml-1 btn btn-outline-primary" href="#">Log in</a>
                 </nav>
             </div>
         </div>

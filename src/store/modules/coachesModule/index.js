@@ -6,10 +6,24 @@ const coachesModule = {
     namespaced: true,
     state() {
         return {
-            coaches: [],
-            selectedCoach: null,
-            randomN: 88,
-            random2N: 2
+            coaches: [
+                {
+                    id: 1231,
+                    firstName: 'Gyuri',
+                    lastName: 'Elf',
+                    desc: 'sziahello',
+                    type: ['backend', 'frontend'],
+                    rate: 5.99
+                },
+                {
+                    id: 3874,
+                    firstName: 'Bloody',
+                    lastName: 'Mary',
+                    desc: 'kutyafej',
+                    type: ['management', 'graphics'],
+                    rate: 3.99
+                }
+            ]
         };
     },
     mutations: coachesMutations,

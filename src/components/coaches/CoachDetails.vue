@@ -1,28 +1,34 @@
 <template>
+    <router-view></router-view>
     <div class="row">
-        <div class="col-12">
-            <div class="card mb-3 bg-light">
+        <div v-if="selectedCoach" class="col-12">
+            <div class="card mb-3 bg-light shadow">
                 <div class="card-body">
-                    <h5 class="card-title"></h5>
-                    <div v-if="localCoachData">
-                        <h3>
-                            {{ localCoachData.firstName }}
-                            {{ localCoachData.lastName }}
-                        </h3>
-                        <badge-items
-                            v-for="type in localCoachData.type"
-                            :key="type"
-                            :badgeType="type"
-                        ></badge-items>
-                    </div>
-                    <p class="card-text">{{ localCoachData.desc }}</p>
-                    <p class="card-danger"></p>
-
+                    <h3 class="card-title">
+                        {{ fullName }}
+                    </h3>
+                    <p class="card-danger">
+                        {{ hourlyRate }}
+                    </p>
+                    <badge-items
+                        v-for="type in selectedCoach.type"
+                        :key="type"
+                        :badgeType="type"
+                    ></badge-items>
+                    <p class="card-text">{{ description }}</p>
+                    <!--                    <router-link
+                        class="btn btn-primary"
+                        :to="{ name: 'contact-coach', params: coachId }"
+                    >
+                        Contact
+                    </router-link>-->
+                    <!-- It works -->
                     <router-link
                         class="btn btn-primary"
-                        :to="{ name: 'contactPage' }"
-                        >Contact</router-link
+                        :to="`/coaches/${coachId}/contact`"
                     >
+                        Contact
+                    </router-link>
                     <button class="btn btn-light" @click="getCoachData">
                         test
                     </button>
@@ -42,37 +48,59 @@ export default {
     props: ['coachId'],
     data() {
         return {
-            localCoachData: {}
+            isLoading: true,
+            selectedCoach: null
         };
     },
     computed: {
         ...mapGetters('coachesModule', {
-            coachData: 'listSelectedCoachData'
-        })
+            selectedCoachData: 'selectedCoachData'
+        }),
+        fullName() {
+            return (
+                this.selectedCoach.firstName + ' ' + this.selectedCoach.lastName
+            );
+        },
+        hourlyRate() {
+            return `$${this.selectedCoach.rate}/hour`;
+        },
+        description() {
+            return this.selectedCoach.desc;
+        }
     },
     methods: {
         getCoachData() {
-            this.localCoachData = this.coachData(this.coachId);
+            this.selectedCoach = this.selectedCoachData(this.coachId);
         }
     },
     created() {
-        // If i use this, it will work.
-        // setTimeout(() => {
-        //     this.getCoachData();
-        // }, 200);
+        this.getCoachData();
     },
-    mounted() {
-        // With this, the switching is available, but if I hit the direct url of the coach, i got errors.
+    /*mounted() {
         this.$nextTick(function() {
-            //code here
             this.getCoachData();
         });
-    },
+    },*/
     watch: {
+        // If the coachId changed, getting new coach data
         coachId() {
             this.getCoachData();
         }
     }
+    // beforeRouteEnter(to, from, next) {
+    //     getPost(to.params.coachId, (err, post) => {
+    //         next(vm => vm.localCoachData(err, post));
+    //     });
+    // },
+    // // eslint-disable-next-line no-unused-vars
+    // async beforeRouteUpdate(to, from) {
+    //     this.localCoachData = null;
+    //     try {
+    //         this.localCoachData = await getPost(to.params.coachId);
+    //     } catch (error) {
+    //         this.error = error.toString();
+    //     }
+    // }
 };
 </script>
 

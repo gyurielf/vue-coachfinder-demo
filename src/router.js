@@ -1,8 +1,19 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import CoachesList from '@/components/pages/CoachesList';
-import RequestsList from '@/components/pages/RequestsList';
-import CoachDetails from '@/components/coaches/CoachDetails';
-import Contact from '@/components/pages/Contact';
+import CoachDetails from '@/components/coaches/CoachDetails'; // Default import
+// const CoachDetails = () => import('@/components/coaches/CoachDetails'); // CMP Lazy load sample
+// const CoachDetails = () =>
+//     import(
+//         /* webpackChunkName: "coaches-page" */ '@/components/coaches/CoachDetails'
+//     );
+import CoachesList from '@/components/pages/coaches/CoachesList'; // Default import
+// const CoachesList = () =>
+//     import(
+//         /* webpackChunkName: "coaches-page" */ '@/components/pages/coaches/CoachesList'
+//     );
+import CoachRegistration from '@/components/pages/coaches/CoachRegistration';
+import ContactCoach from '@/components/pages/requests/ContactCoach';
+import RequestsReceived from '@/components/pages/requests/RequestsReceived';
+
 import NotFound from '@/components/pages/NotFound';
 
 const router = createRouter({
@@ -11,37 +22,41 @@ const router = createRouter({
         {
             path: '/',
             name: 'home',
-            meta: { needAuth: true },
             redirect: { name: 'coaches' }
         },
         {
             path: '/coaches',
             name: 'coaches',
-            meta: { needAuth: true },
             component: CoachesList,
             children: [
                 {
                     path: ':coachId',
-                    name: 'mentor',
+                    name: 'coach-details',
                     component: CoachDetails,
-                    props: true
+                    props: true,
+                    children: [
+                        {
+                            path: 'contact',
+                            name: 'contact-coach',
+                            component: ContactCoach,
+                            props: true
+                        }
+                    ]
                 }
             ]
         },
         {
-            path: '/coaches/:coachId/contact',
-            name: 'contactPage',
-            component: Contact,
-            props: true
+            path: '/register',
+            name: 'register',
+            component: CoachRegistration
         },
         {
             path: '/requests',
             name: 'requests',
-            meta: { needAuth: true },
-            component: RequestsList
+            component: RequestsReceived
         },
         {
-            path: '/:notFound(.*)',
+            path: '/:pathMatch(.*)*',
             name: 'not-found',
             component: NotFound
         }
