@@ -7,27 +7,27 @@ const requestsModule = {
     state() {
         return {
             requests: [
-                {
-                    id: 9987,
-                    email: 'blabla@gmail.com',
-                    subject: 'tenisz',
-                    message: 'hello, szopol-e borert ?',
-                    coachId: 3874
-                },
-                {
-                    id: 9988,
-                    email: 'hihihi@gmail.com',
-                    subject: 'kosarlabda',
-                    message: 'bor, joska, turo',
-                    coachId: 3874
-                },
-                {
-                    id: 9989,
-                    email: 'wewewew@gmail.com',
-                    subject: 'foci',
-                    message: 'kecske, kacsa, veder',
-                    coachId: 3874
-                }
+                // {
+                //     id: 9987,
+                //     email: 'blabla@gmail.com',
+                //     subject: 'tenisz',
+                //     message: 'hello, szopol-e borert ?',
+                //     coachId: 'nda3211'
+                // },
+                // {
+                //     id: 9988,
+                //     email: 'hihihi@gmail.com',
+                //     subject: 'kosarlabda',
+                //     message: 'bor, joska, turo',
+                //     coachId: 'nda3211'
+                // },
+                // {
+                //     id: 9989,
+                //     email: 'wewewew@gmail.com',
+                //     subject: 'foci',
+                //     message: 'kecske, kacsa, veder',
+                //     coachId: 'nda3211'
+                // }
             ]
         };
     },

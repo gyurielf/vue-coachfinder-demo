@@ -11,12 +11,35 @@ const store = createStore({
     },
     state() {
         return {
-            userId: 'nda3211'
+            // userId: 'nda3211',
+            globalModalStatus: {
+                active: false,
+                show: false
+            }
         };
     },
     getters: {
         userId(state) {
             return state.userId;
+        },
+        globalModalStatus(state) {
+            return state.globalModalStatus;
+        }
+    },
+    mutations: {
+        toggleGlobalModalActive(state) {
+            state.globalModalStatus.active = !state.globalModalStatus.active;
+        },
+        toggleGlobalModalShow(state) {
+            state.globalModalStatus.show = !state.globalModalStatus.show;
+        }
+    },
+    actions: {
+        toggleGlobalModalActive(context) {
+            context.commit('toggleGlobalModalActive');
+        },
+        toggleGlobalModalShow(context) {
+            context.commit('toggleGlobalModalShow');
         }
     }
 });

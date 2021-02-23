@@ -8,7 +8,7 @@
                         <a :href="'mailto:' + requestEmail">
                             {{ requestEmail }}
                         </a>
-                        <span> - To: {{ coachName }}</span>
+                        <span> - To: {{ 'hi' }}</span>
                         <span class="float-right font-italic text-muted">
                             #{{ requestId }}
                         </span>
@@ -53,8 +53,9 @@ export default {
         }
     },
     methods: {
-        getCoachData() {
-            this.selectedCoach = this.selectedCoachData(this.coach);
+        // Should review and set the
+        async getCoachData() {
+            this.selectedCoach = await this.selectedCoachData(this.coach);
         }
     },
     created() {

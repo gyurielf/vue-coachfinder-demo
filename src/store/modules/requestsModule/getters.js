@@ -1,5 +1,5 @@
 export default {
-    getRequests(state) {
+    requestsList(state) {
         return state.requests;
     }
 };

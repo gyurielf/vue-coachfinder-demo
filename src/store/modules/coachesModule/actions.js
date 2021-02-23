@@ -4,7 +4,7 @@ export default {
     //     context.commit('getCoaches');
     // },
     // NEW way of getCoaches
-    async getCoaches({ commit }) {
+    /*async getCoaches({ commit }) {
         try {
             const response = await fetch(
                 'https://vue-http-b1792-default-rtdb.europe-west1.firebasedatabase.app/coaches.json'
@@ -20,7 +20,7 @@ export default {
             const error = e.toString();
             console.log(error);
         }
-    },
+    },*/
     // OLD way of getCoachData
     // getCoachData(context) {
     //     context.commit('getCoachData');
@@ -45,8 +45,8 @@ export default {
 
     // Registering Coach
     async registerCoach(context, payload) {
-        const userId = context.rootGetters.userId;
-        console.log(userId);
+        // const userId = context.rootGetters.userId;
+        // console.log(userId);
         const coachData = {
             firstName: payload.firstName.val,
             lastName: payload.lastName.val,
@@ -54,49 +54,55 @@ export default {
             desc: payload.desc.val,
             rate: payload.rate.val
         };
+
+        // const token = context.getters.token;
+
         const response = await fetch(
-            `https://vue-http-b1792-default-rtdb.europe-west1.firebasedatabase.app/coaches/${userId}.json`,
+            `https://vue-http-b1792-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`,
             {
-                method: 'PUT',
+                method: 'POST',
                 body: JSON.stringify(coachData)
             }
         );
-        // const responseData = await response.json();
+        const responseData = await response.json();
         if (!response.ok) {
             console.log('ERR');
         }
         context.commit('registerCoach', {
             ...coachData,
-            id: userId
+            id: await responseData.name
         });
+        context.commit('setFetchTimestamp');
     },
-    async loadCoaches(context) {
-        try {
-            const response = await fetch(
-                `https://vue-http-b1792-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
-            );
-            const responseData = await response.json();
-            if (!response.ok) {
-                console.log('ERR');
-            }
-
-            const coaches = [];
-            for (const key in responseData) {
-                const coach = {
-                    id: key,
-                    firstName: responseData[key].firstName,
-                    lastName: responseData[key].lastName,
-                    type: responseData[key].type,
-                    desc: responseData[key].desc,
-                    rate: responseData[key].rate
-                };
-                coaches.push(coach);
-            }
-            context.commit('setCoaches', coaches);
-        } catch (e) {
-            const error = e.toString();
-            console.log(error);
+    // Loading coaches over API
+    async loadCoaches(context, payload) {
+        // Caching solution. (1 min (shouldUpdate))
+        if (!payload.forceRefresh && !context.getters.shouldUpdate) {
+            // console.log(payload.forceRefresh);
+            return;
         }
+        // console.log(payload.forceRefresh);
+        const response = await fetch(
+            `https://vue-http-b1792-default-rtdb.europe-west1.firebasedatabase.app/coaches.json`
+        );
+        const responseData = await response.json();
+        if (!response.ok) {
+            throw new Error(responseData.message || 'Failed to fetch!');
+        }
+
+        const coaches = [];
+        for (const key in responseData) {
+            const coach = {
+                id: key,
+                firstName: responseData[key].firstName,
+                lastName: responseData[key].lastName,
+                type: responseData[key].type,
+                desc: responseData[key].desc,
+                rate: responseData[key].rate
+            };
+            coaches.push(coach);
+        }
+        context.commit('setCoaches', coaches);
     }
     // MY OWN LOGIC OF GETTING COACHES
     /*async loadCoaches({ commit }) {

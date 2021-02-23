@@ -39,8 +39,13 @@
 </template>
 
 <script>
+import { defineAsyncComponent } from 'vue';
 import { mapGetters } from 'vuex';
-import BadgeItems from '@/components/coaches/BadgeItems';
+// import BadgeItems from '@/components/coaches/BadgeItems';
+
+const BadgeItems = defineAsyncComponent(() =>
+    import('@/components/coaches/BadgeItems')
+);
 
 export default {
     name: 'CoachDetails',

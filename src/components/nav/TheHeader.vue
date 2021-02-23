@@ -15,6 +15,7 @@
                         Coach List
                     </router-link>
                     <router-link
+                        v-if="isLoggedIn"
                         class="p-2 mx-1 btn btn-light"
                         :to="{ name: 'requests' }"
                     >
@@ -23,10 +24,24 @@
                     <router-link
                         class="mx-1 btn btn-primary"
                         :to="{ name: 'register' }"
+                        v-if="!isLoggedIn"
                     >
                         Register
                     </router-link>
-                    <a class="ml-1 btn btn-outline-primary" href="#">Log in</a>
+                    <router-link
+                        class="ml-1 btn btn-outline-primary"
+                        :to="{ name: 'sign-in' }"
+                        v-if="!isLoggedIn"
+                    >
+                        Sign-in
+                    </router-link>
+                    <button
+                        v-if="isLoggedIn"
+                        class="btn btn-light"
+                        @click="loggingOut"
+                    >
+                        Logout
+                    </button>
                 </nav>
             </div>
         </div>
@@ -34,8 +49,24 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+
 export default {
-    name: 'TheHeader'
+    name: 'TheHeader',
+    computed: {
+        ...mapGetters('authModule', {
+            isLoggedIn: 'isAuthenticated'
+        })
+    },
+    methods: {
+        ...mapActions('authModule', {
+            logout: 'userLogout'
+        }),
+        loggingOut() {
+            this.logout();
+            this.$router.replace('/');
+        }
+    }
 };
 </script>
 

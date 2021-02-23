@@ -7,35 +7,6 @@ export default {
     setCoaches(state, payload) {
         state.coaches = payload;
     },
-
-    // Temporary disabled
-    /*async getCoachData(state) {
-        try {
-            const response = await fetch(
-                'https://vue-http-b1792-default-rtdb.europe-west1.firebasedatabase.app/coaches.json'
-            );
-            await response.json().then(data => {
-                const results = data[Object.keys(data)[0]];
-                state.selectedCoach = results.find(
-                    coach => coach.id == this.coachId
-                );
-            });
-        } catch (e) {
-            const error = e.toString();
-            console.log(error);
-        }
-    },*/
-
-    // not need atm(or never)
-    /*getCoachData(state, payload) {
-        // const results = payload[Object.keys(payload)[0]];
-        // state.selectedCoach = results.find(coach => coach.id == this.coachId);
-        // const results = data[Object.keys(data)[0]];
-        state.selectedCoach = state.coaches.find(
-            coach => coach.id == this.coachId
-        );
-    }*/
-
     /* ### POSTING DATA ### */
     registerCoach(state, payload) {
         // This step is done in the actions.
@@ -49,5 +20,8 @@ export default {
         newCoach.id = Math.floor(Math.random() * 999) + 1000;*/
 
         state.coaches.push(payload);
+    },
+    setFetchTimestamp(state) {
+        state.lastFetch = new Date().getTime();
     }
 };

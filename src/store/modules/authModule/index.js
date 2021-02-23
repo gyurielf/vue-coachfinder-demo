@@ -5,7 +5,12 @@ import authMutations from '@/store/modules/authModule/mutations';
 const authModule = {
     namespaced: true,
     state() {
-        return {};
+        return {
+            userId: null,
+            token: null,
+            tokenExpiration: null,
+            didAutoLogout: false
+        };
     },
     mutations: authMutations,
     actions: authActions,
